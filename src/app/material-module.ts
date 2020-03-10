@@ -4,6 +4,7 @@ import {NgModule} from '@angular/core';
  import {MatSidenavModule} from '@angular/material/sidenav';
  import {MatListModule} from '@angular/material/list';
  import {MatMenuModule} from '@angular/material/menu';
+ import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
     imports: [
@@ -11,14 +12,16 @@ import {NgModule} from '@angular/core';
         MatButtonModule,
         MatSidenavModule, 
         MatListModule,
-        MatMenuModule
+        MatMenuModule,
+        MatGridListModule
     ],
     exports: [
         CommonModule, 
         MatButtonModule, 
         MatSidenavModule, 
         MatListModule,
-        MatMenuModule
+        MatMenuModule,
+        MatGridListModule
     ],
 })
 export class MaterialModule {}

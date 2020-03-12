@@ -1,3 +1,5 @@
 <p>base-page works!</p>
 
 <app-base-table></app-base-table>
+<span *ngIf="(success$| async)">Nice Job</span>
+<span *ngIf="!(success$|async) && (success$|async)!=undefined">Boo!</span>

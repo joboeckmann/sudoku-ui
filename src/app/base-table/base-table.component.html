@@ -1,15 +1,8 @@
-<mat-grid-list cols="3" rowHeight="1:1">
-    <mat-grid-tile *ngFor="let inner of (square$ | async)">
+<mat-grid-list *ngIf="(board$|async)" cols="3" rowHeight="1:1">
+    <mat-grid-tile *ngFor="let inner of (board$|async).board">
         <div style="height: 100%; width: 100%;">
-        <app-inner-box [data]="inner"></app-inner-box>
+        <app-inner-box [data]="inner" [submit]="submit2" (finalResult)=gatherResults($event)></app-inner-box>
     </div>
     </mat-grid-tile>
-    <!-- <mat-grid-tile>2</mat-grid-tile>
-    <mat-grid-tile>3</mat-grid-tile>
-    <mat-grid-tile>4</mat-grid-tile>
-    <mat-grid-tile>1</mat-grid-tile>
-    <mat-grid-tile>2</mat-grid-tile>
-    <mat-grid-tile>3</mat-grid-tile>
-    <mat-grid-tile>4</mat-grid-tile>
-    <mat-grid-tile>1</mat-grid-tile> -->
   </mat-grid-list>
+  <button mat-stroked-button color="primary" (click)="submit()">Submit</button>

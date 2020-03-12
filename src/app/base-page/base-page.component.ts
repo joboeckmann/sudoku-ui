@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { SquareState } from '../store/sudoku.store';
 
 @Component({
   selector: 'app-base-page',
@@ -6,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./base-page.component.scss']
 })
 export class BasePageComponent implements OnInit {
+  @Select(SquareState.success) success$: Observable<boolean>;
 
   constructor() { }
 

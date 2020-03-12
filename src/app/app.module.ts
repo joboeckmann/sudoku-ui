@@ -9,19 +9,25 @@ import { BaseTableComponent } from './base-table/base-table.component';
 import { InnerBoxComponent } from './inner-box/inner-box.component';
 import {  NgxsModule } from '@ngxs/store';
 import { SquareState } from './store/sudoku.store';
+import { HttpClientModule } from '@angular/common/http';
+import { SquareComponent } from './square/square.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     BasePageComponent,
     BaseTableComponent,
-    InnerBoxComponent
+    InnerBoxComponent,
+    SquareComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    FormsModule,
     NgxsModule.forRoot([SquareState], { developmentMode: true }),
   ],
   providers: [],

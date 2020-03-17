@@ -1,0 +1,12 @@
+<div>
+<label id="example-radio-group-label">Difficulty Level</label>
+<mat-radio-group
+  aria-labelledby="example-radio-group-label"
+  class="example-radio-group"
+  [(ngModel)]="difficulty">
+  <mat-radio-button class="example-radio-button" *ngFor="let difficulty of difficulties" [value]="difficulty">
+    {{difficulty}}
+  </mat-radio-button>
+</mat-radio-group>
+<button mat-stroked-button color="primary" (click)="newGame()">New Game</button>
+</div>

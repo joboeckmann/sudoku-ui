@@ -1,6 +1,6 @@
 import { SquareStateModel } from './model/square-state.model';
 import { State, Action, StateContext, Selector, NgxsOnInit } from '@ngxs/store';
-import { RetrieveSquare, GetSquareSuccess, GetSquareError, UpdateUserBoard } from './actions/square.actions';
+import { RetrieveSquare, GetSquareSuccess, GetSquareError, UpdateUserBoard, UpdateDifficulty } from './actions/square.actions';
 import { SquareStoreService } from './service/square.service';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
@@ -15,6 +15,7 @@ export const STORE_NAME = 'sudokustate';
   defaults: {
     board: undefined,
     success: undefined,
+    difficulty: "EASY"
   }
 })
 @Injectable()
@@ -31,13 +32,19 @@ export class SquareState implements NgxsOnInit  {
     return state.success;
   }
 
+  @Selector()
+  static difficulty(state: SquareStateModel): string {
+    return state.difficulty;
+  }
+
+
   ngxsOnInit(context: StateContext<SquareStateModel>): void {
-    context.dispatch(new RetrieveSquare());
+    context.dispatch(new RetrieveSquare("EASY"));
   }
 
   @Action(RetrieveSquare)
   getSquare(context: StateContext<SquareStateModel>, action: RetrieveSquare) {
-    return this.squareService.getSquare().pipe(
+    return this.squareService.getSquare(action.payload).pipe(
       take(1),
       tap((board: Board) => {
         context.dispatch(new GetSquareSuccess(board));
@@ -50,7 +57,7 @@ export class SquareState implements NgxsOnInit  {
   }
 
   @Action(GetSquareSuccess)
-  setEntitySuccess(context: StateContext<SquareStateModel>, action: GetSquareSuccess): void {
+  setSquareSuccess(context: StateContext<SquareStateModel>, action: GetSquareSuccess): void {
     context.patchState({
       board: action.payload,
       success: undefined
@@ -58,7 +65,7 @@ export class SquareState implements NgxsOnInit  {
   }
 
   @Action(GetSquareError)
-  setEntityError(context: StateContext<GetSquareError>): void {
+  setSquareError(context: StateContext<GetSquareError>): void {
     context.patchState({
       board:undefined, 
       success: undefined
@@ -67,7 +74,6 @@ export class SquareState implements NgxsOnInit  {
 
   @Action(UpdateUserBoard)
   updateUserBoard(context: StateContext<SquareStateModel>, action: UpdateUserBoard){
-    console.log(action.payload)
     return this.squareService.validateSquare(action.payload).pipe(
       take(1),
       tap(() => {
@@ -83,4 +89,11 @@ export class SquareState implements NgxsOnInit  {
       })
     );
   }
-  }
+
+  @Action(UpdateDifficulty)
+  updateDifficulty(context: StateContext<SquareStateModel>, action: UpdateDifficulty){
+        context.patchState({
+          difficulty: action.payload
+        });
+      }
+}

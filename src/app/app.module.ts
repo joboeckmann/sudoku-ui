@@ -12,6 +12,7 @@ import { SquareState } from './store/sudoku.store';
 import { HttpClientModule } from '@angular/common/http';
 import { SquareComponent } from './square/square.component';
 import { FormsModule } from '@angular/forms';
+import { SideNavComponent } from './side-nav/side-nav.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FormsModule } from '@angular/forms';
     BasePageComponent,
     BaseTableComponent,
     InnerBoxComponent,
-    SquareComponent
+    SquareComponent,
+    SideNavComponent
   ],
   imports: [
     BrowserModule,

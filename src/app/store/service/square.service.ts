@@ -10,8 +10,8 @@ import { Board } from '../model/board.model';
     constructor(private http: HttpClient) {}
     configUrl = 'http://localhost:8080/board';
 
-    getSquare(): Observable<Board>{
-      return this.http.get<Board>(this.configUrl);
+    getSquare(difficulty:string): Observable<Board>{
+      return this.http.get<Board>(this.configUrl+'?difficulty='+difficulty);
     }
 
     validateSquare(board: Board): Observable<any>{

@@ -30,7 +30,6 @@ export class BaseTableComponent implements OnInit {
     if (this.finalResult.length == 9){
       this.board$.subscribe(b => {
         const c = Object.assign({}, b, {userBoard: this.finalResult})
-        console.log(c)
         this.storeService.dispatchAction(new UpdateUserBoard(c))
         this.finalResult =[];
       } )

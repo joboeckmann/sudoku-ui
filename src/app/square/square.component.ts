@@ -1,4 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Select } from '@ngxs/store';
+import { SquareState } from '../store/sudoku.store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-square',
@@ -6,33 +9,26 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./square.component.scss']
 })
 export class SquareComponent implements OnInit {
+  @Select(SquareState.submit) submit$: Observable<boolean>;
   @Input() num: number
   @Output() currentValue = new EventEmitter<number>();
-  private _submit = false;
   value:number;
-  initialized: boolean = false;
-  @Input() 
-  set submit(value: boolean) {
-    this._submit = value;
-    this.sendDataBack();
- }
- get submit(): boolean {
-  return this._submit;
-}
 
   constructor() { }
 
   ngOnInit(): void {
-    this.initialized = true; 
+    this.submit$.subscribe(s =>{
+      if (s){
+      this.sendDataBack();
+      }
+    })
   }
   sendDataBack(){
-    if (this.initialized){
     if (this.num){
      this.currentValue.emit(this.num);
     } else{
         this.currentValue.emit(+this.value);
     }
   }
-}
 
 }

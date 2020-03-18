@@ -1,15 +1,27 @@
 import { Board } from '../model/board.model';
 
-export const GET_SQUARE = '[Resolver] Get Square';
-export const GET_SQUARE_SUCCESS = '[Resolver] Square Success';
-export const GET_SQUARE_ERROR = '[Resolver] Square Error';
-export const UPDATE_USER_BOARD = '[Resolver] Update User Board';
-export const UPDATE_DIFFICULTY = '[Resolver] Update Difficulty';
-export const GET_SUCCESS = '[Resolver] User Success';
+export const GET_SQUARE = ' Get Square';
+export const GET_SQUARE_SUCCESS = ' Square Success';
+export const GET_SQUARE_ERROR = ' Square Error';
+export const UPDATE_USER_BOARD = ' Update User Board';
+export const UPDATE_DIFFICULTY = 'Update Difficulty';
+export const GET_SUCCESS = ' User Success';
+export const GET_SUBMIT = 'Get submit';
+export const UPDATE_SUMBIT = ' Update Submit';
 
 export class RetrieveSquare {
     static readonly type = GET_SQUARE;
     constructor(public payload: string) {}
+  }
+
+  export class RetrieveSubmit {
+    static readonly type = GET_SUBMIT;
+    constructor() {}
+  }
+
+  export class UpdateSubmit {
+    static readonly type = UPDATE_SUMBIT;
+    constructor(public payload: boolean) {}
   }
 
 export class GetSquareSuccess {

@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SquareComponent } from './square/square.component';
 import { FormsModule } from '@angular/forms';
 import { SideNavComponent } from './side-nav/side-nav.component';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { SideNavComponent } from './side-nav/side-nav.component';
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    NgxsReduxDevtoolsPluginModule.forRoot({}),
     NgxsModule.forRoot([SquareState], { developmentMode: true }),
   ],
   providers: [],

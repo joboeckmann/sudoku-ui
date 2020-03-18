@@ -3,8 +3,9 @@ import { Select } from '@ngxs/store';
 import { SquareState } from '../store/sudoku.store';
 import { Observable } from 'rxjs';
 import { StoreService } from '../store/store-service.service';
-import { UpdateUserBoard } from '../store/actions/square.actions';
+import { UpdateUserBoard, UpdateSubmit } from '../store/actions/square.actions';
 import { Board } from '../store/model/board.model';
+import { take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-base-table',
@@ -13,7 +14,6 @@ import { Board } from '../store/model/board.model';
 })
 export class BaseTableComponent implements OnInit {
   @Select(SquareState.board) board$: Observable<Board>;
-  submit2: boolean = false;
   finalResult: number[][]=[];
 
   constructor(  private storeService: StoreService) { }
@@ -22,19 +22,18 @@ export class BaseTableComponent implements OnInit {
   }
 
   submit(){
-    this.submit2 = !this.submit2;
+    this.storeService.dispatchAction(new UpdateSubmit(true))
   }
 
   gatherResults(numbers: number[]){
+    
     this.finalResult.push(numbers);
     if (this.finalResult.length == 9){
-      this.board$.subscribe(b => {
+        const b = this.storeService.getSquare();
         const c = Object.assign({}, b, {userBoard: this.finalResult})
         this.storeService.dispatchAction(new UpdateUserBoard(c))
         this.finalResult =[];
-      } )
-     
+      } 
     }
-  }
 
 }

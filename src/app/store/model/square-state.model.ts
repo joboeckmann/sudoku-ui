@@ -4,5 +4,6 @@ export interface SquareStateModel {
     readonly board: Board; 
     readonly success: boolean;
     readonly difficulty: string;
+    readonly submit: boolean;
 
   }

@@ -1,6 +1,6 @@
 
 <mat-grid-list cols="3" rowHeight="1:1" >
     <mat-grid-tile *ngFor="let num of data">
-      <app-square [num]="num" [submit]="_submit" (currentValue)="gatherResults($event)"></app-square>
+      <app-square [num]="num"  (currentValue)="gatherResults($event)"></app-square>
     </mat-grid-tile>
   </mat-grid-list>

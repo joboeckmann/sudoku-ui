@@ -1,6 +1,6 @@
 import { SquareStateModel } from './model/square-state.model';
 import { State, Action, StateContext, Selector, NgxsOnInit } from '@ngxs/store';
-import { RetrieveSquare, GetSquareSuccess, GetSquareError, UpdateUserBoard, UpdateDifficulty } from './actions/square.actions';
+import { RetrieveSquare, GetSquareSuccess, GetSquareError, UpdateUserBoard, UpdateDifficulty, UpdateSubmit } from './actions/square.actions';
 import { SquareStoreService } from './service/square.service';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
@@ -15,7 +15,8 @@ export const STORE_NAME = 'sudokustate';
   defaults: {
     board: undefined,
     success: undefined,
-    difficulty: "EASY"
+    difficulty: "EASY",
+    submit: false
   }
 })
 @Injectable()
@@ -35,6 +36,11 @@ export class SquareState implements NgxsOnInit  {
   @Selector()
   static difficulty(state: SquareStateModel): string {
     return state.difficulty;
+  }
+
+  @Selector()
+  static submit(state: SquareStateModel): boolean {
+    return state.submit;
   }
 
 
@@ -60,7 +66,8 @@ export class SquareState implements NgxsOnInit  {
   setSquareSuccess(context: StateContext<SquareStateModel>, action: GetSquareSuccess): void {
     context.patchState({
       board: action.payload,
-      success: undefined
+      success: undefined,
+      submit: false,
     });
   }
 
@@ -68,7 +75,8 @@ export class SquareState implements NgxsOnInit  {
   setSquareError(context: StateContext<GetSquareError>): void {
     context.patchState({
       board:undefined, 
-      success: undefined
+      success: undefined,
+      submit: false
     });
   }
 
@@ -96,4 +104,12 @@ export class SquareState implements NgxsOnInit  {
           difficulty: action.payload
         });
       }
+
+    @Action(UpdateSubmit)
+    updateSubmit (context: StateContext<SquareStateModel>, action: UpdateSubmit){
+          context.patchState({
+            submit: action.payload
+          });
+        }
+      
 }

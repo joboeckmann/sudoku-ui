@@ -14,6 +14,8 @@ export class BasePageComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  
   }
+
 
 }

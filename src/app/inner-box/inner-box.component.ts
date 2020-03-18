@@ -11,15 +11,6 @@ export class InnerBoxComponent implements OnInit {
   finalData: number[] =[];
   @Output() finalResult = new EventEmitter<number[]>();
 
-   _submit = false;
-  @Input() 
-  set submit(value: boolean) {
-    this._submit = value;
- }
- get submit(): boolean {
-  return this._submit;
-}
-
   constructor() { }
 
   gatherResults(num: number) {

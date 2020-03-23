@@ -8,6 +8,8 @@ export const UPDATE_DIFFICULTY = 'Update Difficulty';
 export const GET_SUCCESS = ' User Success';
 export const GET_SUBMIT = 'Get submit';
 export const UPDATE_SUMBIT = ' Update Submit';
+export const UPDATE_SCORES ='Update Scores';
+export const UPDATE_SCORE ='Update Scores';
 
 export class RetrieveSquare {
     static readonly type = GET_SQUARE;
@@ -47,4 +49,14 @@ export class UpdateDifficulty {
 export class GetSuccess {
   static readonly type = GET_SUCCESS;
   constructor() {}
+}
+
+export class UpdateScores {
+  static readonly type = UPDATE_SCORES;
+  constructor(public difficulty: string, public score: number) {}
+}
+
+export class UpdateCurrentScore {
+  static readonly type = UPDATE_SCORE;
+  constructor(public score: number) {}
 }

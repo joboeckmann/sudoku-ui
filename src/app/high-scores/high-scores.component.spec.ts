@@ -1,26 +1,26 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BaseTableComponent } from './base-table.component';
+import { HighScoresComponent } from './high-scores.component';
 import { NgxsModule } from '@ngxs/store';
 import { SquareState } from '../store/sudoku.store';
 import { StoreService } from '../store/store-service.service';
 import { SquareStoreService } from '../store/service/square.service';
 
-describe('BaseTableComponent', () => {
-  let component: BaseTableComponent;
-  let fixture: ComponentFixture<BaseTableComponent>;
+describe('HighScoresComponent', () => {
+  let component: HighScoresComponent;
+  let fixture: ComponentFixture<HighScoresComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({ 
+    TestBed.configureTestingModule({
       imports: [ NgxsModule.forRoot([SquareState])],
-      declarations: [ BaseTableComponent ],
+      declarations: [ HighScoresComponent ],
       providers: [
         { provide: StoreService,  
           useValue: jasmine.createSpyObj('storeService',['getDifficulty', 'getScore', 'dispatchAction']) 
         },
         {
           provide: SquareStoreService,
-          useValue: jasmine.createSpyObj('storeService', ['getSquare'])
+          useValue: jasmine.createSpyObj('storeService', ['getSquare', , 'getHighScores'])
         }
       ]
     })
@@ -28,7 +28,7 @@ describe('BaseTableComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BaseTableComponent);
+    fixture = TestBed.createComponent(HighScoresComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

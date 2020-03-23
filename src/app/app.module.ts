@@ -14,6 +14,8 @@ import { SquareComponent } from './square/square.component';
 import { FormsModule } from '@angular/forms';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { TimerComponent } from './timer/timer.component';
+import { HighScoresComponent } from './high-scores/high-scores.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
     BaseTableComponent,
     InnerBoxComponent,
     SquareComponent,
-    SideNavComponent
+    SideNavComponent,
+    TimerComponent,
+    HighScoresComponent
   ],
   imports: [
     BrowserModule,

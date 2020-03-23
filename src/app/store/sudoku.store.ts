@@ -1,6 +1,6 @@
 import { SquareStateModel } from './model/square-state.model';
 import { State, Action, StateContext, Selector, NgxsOnInit } from '@ngxs/store';
-import { RetrieveSquare, GetSquareSuccess, GetSquareError, UpdateUserBoard, UpdateDifficulty, UpdateSubmit } from './actions/square.actions';
+import { RetrieveSquare, GetSquareSuccess, GetSquareError, UpdateUserBoard, UpdateDifficulty, UpdateSubmit, UpdateScores, UpdateCurrentScore } from './actions/square.actions';
 import { SquareStoreService } from './service/square.service';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
@@ -16,7 +16,12 @@ export const STORE_NAME = 'sudokustate';
     board: undefined,
     success: undefined,
     difficulty: "EASY",
-    submit: false
+    submit: false,
+    newGame: true,
+    easyScore: 9999999999999,
+    mediumScore:9999999999999,
+    hardScore: 9999999999999,
+    score: 9999999999999
   }
 })
 @Injectable()
@@ -26,6 +31,11 @@ export class SquareState implements NgxsOnInit  {
   @Selector()
   static board(state: SquareStateModel): Board {
     return state.board;
+  }
+
+  @Selector()
+  static score(state: SquareStateModel): number {
+    return state.score;
   }
 
   @Selector()
@@ -43,9 +53,31 @@ export class SquareState implements NgxsOnInit  {
     return state.submit;
   }
 
+  @Selector()
+  static newGame(state: SquareStateModel): boolean {
+    return state.newGame;
+  }
+
+
+  @Selector()
+  static easyScore(state: SquareStateModel): number {
+    return state.easyScore;
+  }
+
+  @Selector()
+  static mediumScore(state: SquareStateModel): number {
+    return state.mediumScore;
+  }
+
+  @Selector()
+  static hardScore(state: SquareStateModel): number {
+    return state.hardScore;
+  }
+
 
   ngxsOnInit(context: StateContext<SquareStateModel>): void {
     context.dispatch(new RetrieveSquare("EASY"));
+    context.dispatch(new UpdateScores(null,null));
   }
 
   @Action(RetrieveSquare)
@@ -68,6 +100,7 @@ export class SquareState implements NgxsOnInit  {
       board: action.payload,
       success: undefined,
       submit: false,
+      newGame: true
     });
   }
 
@@ -76,7 +109,8 @@ export class SquareState implements NgxsOnInit  {
     context.patchState({
       board:undefined, 
       success: undefined,
-      submit: false
+      submit: false,
+      newGame: false
     });
   }
 
@@ -105,11 +139,41 @@ export class SquareState implements NgxsOnInit  {
         });
       }
 
-    @Action(UpdateSubmit)
-    updateSubmit (context: StateContext<SquareStateModel>, action: UpdateSubmit){
-          context.patchState({
-            submit: action.payload
-          });
-        }
-      
+  @Action(UpdateSubmit)
+  updateSubmit (context: StateContext<SquareStateModel>, action: UpdateSubmit){
+        context.patchState({
+          submit: action.payload,
+          newGame: false
+        });
+      }
+
+  @Action(UpdateScores)
+  updateScores (context: StateContext<SquareStateModel>, action: UpdateScores){
+    return this.squareService.getHighScores(action.difficulty, action.score).pipe(
+      take(1),
+      tap((scores: any) => {
+        console.log(scores)
+        context.patchState({
+          easyScore: scores.easy,
+          mediumScore: scores.medium,
+          hardScore: scores.hard
+        })
+      }),
+      catchError(error => {
+        context.patchState({
+          easyScore: 9999999999999,
+          mediumScore: 9999999999999,
+          hardScore: 9999999999999
+        });
+        return error
+      })
+    );
+  }
+  @Action(UpdateCurrentScore)
+  updateCurrentScore(context: StateContext<SquareStateModel>, action: UpdateScores){
+    context.patchState({
+      score: action.score 
+    })
+  }
+
 }

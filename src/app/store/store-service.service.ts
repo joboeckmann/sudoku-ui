@@ -19,6 +19,14 @@ export class StoreService {
     return this.store.selectSnapshot(SquareState.board);
   };
 
+  getDifficulty = (): string => {
+    return this.store.selectSnapshot(SquareState.difficulty);
+  };
+
+  getScore = (): number => {
+    return this.store.selectSnapshot(SquareState.score);
+  };
+
   getUserSucess = (): boolean => {
     return this.store.selectSnapshot(SquareState.success);
   };
